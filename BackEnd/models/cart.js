@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://mongodb://localhost:27017/myproject", { useMongoClient : true });
+mongoose.connect("mongodb://localhost:27017/myproject", { useMongoClient : true });
 
 const Schema = mongoose.Schema;
 
@@ -16,6 +16,6 @@ const cartSchema = new Schema({
 
 });
 
-const product = mongoose.model("cart", cartSchema);
+const cart = mongoose.model("cart", cartSchema);
 
 module.exports = cart;

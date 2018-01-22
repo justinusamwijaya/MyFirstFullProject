@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://mongodb://localhost:27017/myproject", { useMongoClient : true });
+mongoose.connect("mongodb://localhost:27017/myproject", { useMongoClient : true });
 
 const Schema = mongoose.Schema;
 
