@@ -40,6 +40,16 @@ router
     });
 
 })
+.get("/list",(req,res)=>{
+    Products.find({},(error,result)=>{
+        if(error) res.json(error);
+        else {
+        
+            res.json(result)
+        }
+        
+    })
+})
 .delete("/delete/:id", (req, res) => {
 
     Products.findByIdAndRemove(req.params.id, (error, result) => {
@@ -59,12 +69,6 @@ router
         else res.json(result);
     })
 })
-.get("/list",(req,res)=>{
-    Products.find({},(error,result)=>{
-        if(error)res.send(error);
-        else res.json(result);
-    })
-})
 .put("/update/:id",(req,res)=>{
     let newObj ={
         NamaProduk:req.body.NamaProduk,
@@ -80,6 +84,25 @@ router
     Products.find({UploaderId:req.params.id},(error,result)=>{
         if(error) res.json(error);
         else res.json(result);
+    })
+})
+.get("/:id",(req,res)=>{
+    Products.find({},(error,result)=>{
+        if(error) res.json(error);
+        else {
+        
+            mo =  req.params.id.toLowerCase().replace(/[^A-Za-z]/, ' ').split(" ")
+        let array=[]            
+            for(i=0;i<result.length;i++){
+                for(j=0;j<mo.length;j++){
+                if(result[i].NamaProduk.toLowerCase().replace(/[^A-Za-z]/,' ').split(" ").indexOf(mo[j])>=0){
+                    array.push(result[i])
+                     }   
+                }
+            }
+            res.json(array)
+        }
+        
     })
 })
 .post("/cart", (req, res) => {
