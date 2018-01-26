@@ -12,7 +12,6 @@ const cartSchema = new Schema({
     NamaProduk:String,
     Price:Number,
     Quantity:Number,
-    TotalProduct:Number,
 
 });
 

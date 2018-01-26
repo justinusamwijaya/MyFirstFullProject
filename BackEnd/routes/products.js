@@ -105,8 +105,56 @@ router
         
     })
 })
-.post("/cart", (req, res) => {
+.post("/cart",(req,res)=>{
 
+    cart.findOne({ProductId:req.body.ProductId},(carterror,cartresult)=>{
+        if(carterror)res.send(carterror);
+        else {
+            console.log(cartresult)
+            if(cartresult==null){
+                newObj = new cart({
+                    ProductId:req.body.ProductId,
+                    UserId:req.body.UserId,
+                    Gambar:req.body.Gambar,
+                    NamaProduk:req.body.NamaProduk,
+                    Price:req.body.Price,
+                    Quantity:1,
+                })
+                newObj.save((error)=>{
+                    if(error)res.send(error)
+                    else res.json(newObj)
+                        })
+                    }else{
+                        Obj={
+                            Quantity:cartresult.Quantity+1
+                        }
+                        cart.findOneAndUpdate({ProductId:req.body.ProductId},Obj,(error,result)=>{
+                            if(error)res.send(error);
+                            else{
+                                res.json(result)
+                            }
+                        })
+                    }
+            }
+        })      
+})
+.get("/cart/:id",(req,res)=>{
+    cart.find({UserId:req.params.id},(error,result)=>{
+        if(error) res.send(error);
+        else res.json(result);
+    })
+})
+.delete("/removefromcart/:profile/:product",(req,res)=>{
+    cart.findOneAndRemove({ProductId:req.params.product,UserId:req.params.profile},(error,result)=>{
+        if(error)res.send(error);
+        else res.json(result);
+    })
+})
+.delete("/checkout/:id",(req,res)=>{
+    cart.remove({UserId:req.params.id},(error,result)=>{
+        if(error)res.send(error);
+        else res.json
+    })
 
 });
 
